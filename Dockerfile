@@ -14,7 +14,5 @@ RUN npm run build
 ### and where ever builder is below, we can name it whatever we want
 
 FROM nginx
-
 EXPOSE 80
-
 COPY --from=builder /app/build /usr/share/nginx/html
