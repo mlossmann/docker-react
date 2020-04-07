@@ -10,3 +10,17 @@ before_install:
 
 script:
   - docker run -e CI=true mlossmann/docker-react npm run test -- --coverage
+
+### Needed to deploy off to AWS
+deploy:
+  provider: elasticbeanstalk ###Travis can push to alot of CSPs like AWS, Digital Ocean, Azure, etc.
+  region: "us-east-2" ##Region where you created your EBS instance
+  app: "docker-react" ###This is the name of the app, that we created in the dashboard
+  env: "DockerReact-env" ###The this is what is spun up when we create the app
+  bucket_name: "elasticbeanstalk-us-east-2-237387071766" ###This is the S3 bucket where your program will be sent to
+  bucket_path: "docker-react" ###This gets reused for all EBS instances, we need to find the folder if there.  IF not default is app name
+  edge: True
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  on:
+    branch: master
